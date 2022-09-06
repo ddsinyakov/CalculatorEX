@@ -26,6 +26,7 @@ namespace CalculatorTests
             Assert.AreEqual(RomanNumber.Parse("CDI"), 401);
             Assert.AreEqual(RomanNumber.Parse("LV"), 55);
             Assert.AreEqual(RomanNumber.Parse("XL"), 40);
+            Assert.AreEqual(RomanNumber.Parse("XLCM"), 40);
         }
     }
 }
