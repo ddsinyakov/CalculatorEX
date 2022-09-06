@@ -10,6 +10,7 @@ namespace CalculatorEX.App
     {
         public void Run()
         {
+            Console.WriteLine("Calculator is running");
             Console.WriteLine("Hello world");
         }
     }
