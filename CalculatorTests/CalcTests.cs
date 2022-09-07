@@ -35,6 +35,7 @@ namespace CalculatorTests
             Assert.AreEqual(RomanNumber.Parse("CD"), 400);
             Assert.AreEqual(RomanNumber.Parse("LV"), 55);
             Assert.AreEqual(RomanNumber.Parse("XL"), 40);
+            Assert.AreEqual(RomanNumber.Parse("XLCM"), 40);
         }
 
         [TestMethod]
