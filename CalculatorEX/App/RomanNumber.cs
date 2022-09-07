@@ -10,15 +10,6 @@ namespace CalculatorEX.App
     {
         static public int Parse(String str)
         {
-<<<<<<< HEAD
-            if (str.Contains("N") && str.Length > 1)
-            {
-                throw new ArgumentException("N is not allowed in context");
-            }
-
-            char[] digits = { 'N', 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
-            int[] digitsValues = { 0, 1, 5, 10, 50, 100, 500, 1000 };
-=======
             if (str is null)
                 throw new ArgumentNullException();
 
@@ -28,9 +19,13 @@ namespace CalculatorEX.App
             if (str == "N")
                 return 0;
 
+            if (str.Contains("N") && str.Length > 1)
+            {
+                throw new ArgumentException("N is not allowed in context");
+            }
+
             char[] digits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
             int[] digitsValues = { 1, 5, 10, 50, 100, 500, 1000 };
->>>>>>> c06cc3797ca6b2cedd646c7553b6ac91206158a9
 
             char digit = str[str.Length - 1];
             int index = Array.IndexOf(digits, digit);
