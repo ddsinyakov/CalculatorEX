@@ -10,6 +10,15 @@ namespace CalculatorEX.App
     {
         static public int Parse(String str)
         {
+            if (str is null)
+                throw new ArgumentNullException();
+
+            if (str == String.Empty)
+                throw new ArithmeticException("Empty string not allowed");
+
+            if (str == "N")
+                return 0;
+
             char[] digits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
             int[] digitsValues = { 1, 5, 10, 50, 100, 500, 1000 };
 
@@ -23,7 +32,7 @@ namespace CalculatorEX.App
 
             int val = digitsValues[index];
             int res = val;
-
+ 
             for (int i = str.Length - 2; i>= 0; i--)
             {
                 digit = str[i];
