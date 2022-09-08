@@ -32,6 +32,7 @@ namespace CalculatorEX.App
             if (str == "N")
                 return 0;
 
+            // if str contains N and it is not the only character throws exception
             if (str.Contains("N") && str.Length > 1)
             {
                 throw new ArgumentException("N is not allowed in context");
@@ -40,26 +41,34 @@ namespace CalculatorEX.App
             char[] digits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
             int[] digitsValues = { 1, 5, 10, 50, 100, 500, 1000 };
 
+            // get last char
             char digit = str[str.Length - 1];
             int index = Array.IndexOf(digits, digit);
 
             if(index == -1)
-            {
                 throw new ArgumentException($"Invalid char {digit}");
-            }
 
             int val = digitsValues[index];
             int res = val;
- 
-            for (int i = str.Length - 2; i>= 0; i--)
+
+            // go through str from end - 1
+            for (int i = str.Length - 2; i >= 0; i--)
             {
                 digit = str[i];
                 index = Array.IndexOf(digits, digit);
 
                 if (index == -1)
                 {
+                    // check if the number is negative
+                    if ( i == 0 && digit == '-')
+                    {
+                        res *= -1;
+                        continue;
+                    }
+
                     throw new ArgumentException($"Invalid char {digit}");
                 }
+                
 
                 if(digitsValues[index] < val)
                 {
@@ -70,6 +79,8 @@ namespace CalculatorEX.App
                     val = digitsValues[index];
                     res += val;
                 }
+
+
             }
 
             return res;
@@ -85,11 +96,21 @@ namespace CalculatorEX.App
 
             int n = Value;
             string res = "";
+
             String[] parts = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
             int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
+            // adds - to res if the value is negative
+            if(n < 0)
+            {
+                n = n * -1;
+                res += "-";
+            }
+
+            // go through all values array
             for(int i = 0; i < values.Length; i++)
             {
+                // decrease n till n become less than current value and add that much letter to res
                 while(n >= values[i])
                 {
                     n -= values[i];
