@@ -101,5 +101,72 @@ namespace CalculatorTests
             // Check if RomanNumber.Parse with null argument throws ArgumentNullException
             Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(null!));
         }
+
+        [TestMethod]
+        public void RomanNumberCtor()
+        {
+            // Check if constructor of RomanNumber works
+            RomanNumber romanNumber = new RomanNumber();
+            Assert.IsNotNull(romanNumber);
+
+            // Check if constructor with string argument of RomanNumber works 
+            romanNumber = new(10);
+            Assert.IsNotNull(romanNumber);
+
+            romanNumber = new(0);
+            Assert.IsNotNull(romanNumber);
+        }
+
+        [TestMethod]
+        public void RomanNumberToString()
+        {
+            // Check RomanNumber.ToString method
+            RomanNumber romanNumber = new RomanNumber();
+            Assert.AreEqual("N", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(10);
+            Assert.AreEqual("X", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(90);
+            Assert.AreEqual("XC", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(20);
+            Assert.AreEqual("XX", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(1999);
+            Assert.AreEqual("MCMXCIX", romanNumber.ToString());
+        }
+
+        [TestMethod]
+        public void RomanNumberToStringParseCrossTest()
+        {
+            // Check if RomanNumber.Parse and RomanNumber.ToString works opposite to each other
+            RomanNumber num = new();
+            for(int n = 0; n< 2022; n++)
+            {
+                num.Value = n;
+                Assert.AreEqual(n, RomanNumber.Parse(num.ToString()));
+            }
+        }
+
+        [TestMethod]
+        public void RomanNumberTypeTest()
+        {
+            // Check if RomanNumber is reference type
+            Assert.IsFalse(typeof(RomanNumber).IsValueType);
+
+            // Check if RomanNumbers with different values are same, but with diferent refferences
+            RomanNumber a = new RomanNumber(10);
+            RomanNumber b = a with { };
+            Assert.AreNotSame(a, b);
+            Assert.AreEqual(a, b);
+            Assert.IsTrue(a == b);
+
+            // Check if RomanNumbers with different values are not the same and with diferent refferences
+            RomanNumber c = a with { Value = 20 };
+            Assert.AreNotSame(a, c);
+            Assert.AreNotEqual(a, c);
+            Assert.IsFalse(a == c);
+        }
     }
 }

@@ -11,6 +11,10 @@ namespace CalculatorEX.App
         public void Run()
         {
             Console.WriteLine("Calculator is running");
+
+            var n = new RomanNumber(90);
+            Console.WriteLine(n);
+            if (n.ToString() == "XC") Console.WriteLine("Hello");
         }
     }
 }

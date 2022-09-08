@@ -6,15 +6,28 @@ using System.Threading.Tasks;
 
 namespace CalculatorEX.App
 {
-    public class RomanNumber
+    public record RomanNumber
     {
+        public int Value { get; set; } = 0;
+
+        public RomanNumber()
+        {
+
+        }
+
+        public RomanNumber(int num)
+        {
+            Value = num;
+        }
+
+
         static public int Parse(String str)
         {
             if (str is null)
                 throw new ArgumentNullException();
 
-            if (str == String.Empty)
-                throw new ArithmeticException("Empty string not allowed");
+            if (str.Length < 1)
+                throw new ArgumentException("Empty string not allowed");
 
             if (str == "N")
                 return 0;
@@ -56,6 +69,31 @@ namespace CalculatorEX.App
                 {
                     val = digitsValues[index];
                     res += val;
+                }
+            }
+
+            return res;
+        }
+
+        
+        public override string ToString()
+        {
+            if(Value == 0)
+            {
+                return "N";
+            }
+
+            int n = Value;
+            string res = "";
+            String[] parts = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+            int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+
+            for(int i = 0; i < values.Length; i++)
+            {
+                while(n >= values[i])
+                {
+                    n -= values[i];
+                    res += parts[i];
                 }
             }
 
