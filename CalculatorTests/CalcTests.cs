@@ -168,5 +168,35 @@ namespace CalculatorTests
             Assert.AreNotEqual(a, c);
             Assert.IsFalse(a == c);
         }
+
+        [TestMethod]
+        public void RomanNumberNegativeParsing()
+        {
+            Assert.AreEqual(-10, RomanNumber.Parse("-X"));
+            Assert.AreEqual(-1999, RomanNumber.Parse("-MCMXCIX"));
+            Assert.AreEqual(-900, RomanNumber.Parse("-CM"));
+            Assert.AreEqual(-400, RomanNumber.Parse("-CD"));
+            // testing of negative parsing
+        }
+
+        [TestMethod]
+        public void RomanNumberNegativeToString()
+        {
+            RomanNumber romanNumber = new RomanNumber();
+            Assert.AreEqual("N", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(-10);
+            Assert.AreEqual("-X", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(-90);
+            Assert.AreEqual("-XC", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(-20);
+            Assert.AreEqual("-XX", romanNumber.ToString());
+
+            romanNumber = new RomanNumber(-1999);
+            Assert.AreEqual("-MCMXCIX", romanNumber.ToString());
+            // testing of negative numbers to string
+        }
     }
 }
