@@ -17,13 +17,13 @@ namespace CalculatorTests
         public void RomanNumberParse1Digits()
         {
             // Check if RomanNumber.Parse works with 1 simbols
-            Assert.AreEqual(RomanNumber.Parse("I"), 1);
-            Assert.AreEqual(RomanNumber.Parse("V"), 5);
-            Assert.AreEqual(RomanNumber.Parse("X"), 10);
-            Assert.AreEqual(RomanNumber.Parse("L"), 50);
-            Assert.AreEqual(RomanNumber.Parse("C"), 100);
-            Assert.AreEqual(RomanNumber.Parse("D"), 500);
-            Assert.AreEqual(RomanNumber.Parse("M"), 1000);
+            Assert.AreEqual(1,RomanNumber.Parse("I"));
+            Assert.AreEqual(5, RomanNumber.Parse("V"));
+            Assert.AreEqual(10, RomanNumber.Parse("X"));
+            Assert.AreEqual(50, RomanNumber.Parse("L"));
+            Assert.AreEqual(100, RomanNumber.Parse("C"));
+            Assert.AreEqual(500, RomanNumber.Parse("D"));
+            Assert.AreEqual(1000, RomanNumber.Parse("M"));
         }
 
 
@@ -31,12 +31,12 @@ namespace CalculatorTests
         public void RomanNumberParse2Digits()
         {
             // Check if RomanNumber.Parse works with 2 simbols
-            Assert.AreEqual(RomanNumber.Parse("IV"), 4);
-            Assert.AreEqual(RomanNumber.Parse("XV"), 15);
-            Assert.AreEqual(RomanNumber.Parse("CM"), 900);
-            Assert.AreEqual(RomanNumber.Parse("CD"), 400);
-            Assert.AreEqual(RomanNumber.Parse("LV"), 55);
-            Assert.AreEqual(RomanNumber.Parse("XL"), 40);
+            Assert.AreEqual(4, RomanNumber.Parse("IV"));
+            Assert.AreEqual(15, RomanNumber.Parse("XV"));
+            Assert.AreEqual(900, RomanNumber.Parse("CM"));
+            Assert.AreEqual(400, RomanNumber.Parse("CD"));
+            Assert.AreEqual(55, RomanNumber.Parse("LV"));
+            Assert.AreEqual(40, RomanNumber.Parse("XL"));
             //Assert.AreEqual(RomanNumber.Parse("XLCM"), 40);
         }
 
@@ -52,7 +52,7 @@ namespace CalculatorTests
         {
             var exc = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XNX"); });
             var exp = new ArgumentException("N is not allowed in context");
-            Assert.AreEqual(exp.Message, exp.Message);
+            Assert.AreEqual(exp.Message, exc.Message);
             // проверка на запрет N
         }
 
@@ -60,9 +60,9 @@ namespace CalculatorTests
         public void RomanNumberParse3MoreDigits()
         {
             // Check if RomanNumber.Parse works with 3+ simbols 
-            Assert.AreEqual(RomanNumber.Parse("XXX"), 30);
-            Assert.AreEqual(RomanNumber.Parse("CDI"), 401);
-            Assert.AreEqual(RomanNumber.Parse("MCMXCIX"), 1999);
+            Assert.AreEqual(30, RomanNumber.Parse("XXX"));
+            Assert.AreEqual(401, RomanNumber.Parse("CDI"));
+            Assert.AreEqual(1999, RomanNumber.Parse("MCMXCIX"));
         }
 
         [TestMethod]
@@ -73,15 +73,15 @@ namespace CalculatorTests
 
             // Check if invalid simbol at first place in argument of RomanNumber.Parse throws exception with "Invalid char A" message
             var exp = new ArgumentException("Invalid char A");
-            Assert.AreEqual(exp.Message, exp.Message);
+            Assert.AreEqual(exp.Message, exc.Message);
 
             // Same for invalid simbol in the middle
             exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("XAX"));
-            Assert.AreEqual(exp.Message, exp.Message);
+            Assert.AreEqual(exp.Message, exc.Message);
 
             // Same for invalid simbol at last place
             exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("XXA"));
-            Assert.AreEqual(exp.Message, exp.Message);
+            Assert.AreEqual(exp.Message, exc.Message);
 
             // Check if exception message starts with "Invalid char"
             exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("X X"));
@@ -96,7 +96,7 @@ namespace CalculatorTests
 
             // Check if RomanNumber.Parse with empty string argument exception message is equal "Empty string not allowed"
             var exp = new ArgumentException("Empty string not allowed");
-            Assert.AreEqual(exc.Message, exp.Message);
+            Assert.AreEqual(exp.Message, exc.Message);
 
             // Check if RomanNumber.Parse with null argument throws ArgumentNullException
             Assert.ThrowsException<ArgumentNullException>(() => RomanNumber.Parse(null!));
