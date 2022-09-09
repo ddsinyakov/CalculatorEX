@@ -11,16 +11,11 @@ namespace CalculatorEX.App
     {
         public int Value { get; set; } = 0;
 
-        public RomanNumber()
-        {
+        public RomanNumber() {}
 
-        }
+        public RomanNumber(int num) { Value = num; }
 
-        public RomanNumber(int num)
-        {
-            Value = num;
-        }
-
+        #region Parse/ToString
 
         static public int Parse(String str)
         {
@@ -63,7 +58,7 @@ namespace CalculatorEX.App
                 if (index == -1)
                 {
                     // check if the number is negative
-                    if ( i == 0 && digit == '-')
+                    if ( i == 0 && digit == '-' && str.Length != 1)
                     {
                         res *= -1;
                         continue;
@@ -116,5 +111,73 @@ namespace CalculatorEX.App
 
             return res;
         }
+
+        #endregion
+
+        #region Add 
+        public RomanNumber Add(RomanNumber other)
+        {
+            if (other is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            return new RomanNumber(other.Value + this.Value);
+        }
+
+        public RomanNumber Add(int other)
+        {
+            return new RomanNumber(other + this.Value);
+        }
+
+        public RomanNumber Add(string other)
+        {
+            if (other is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            return new RomanNumber(RomanNumber.Parse(other) + this.Value);
+        }
+
+        #endregion
+
+        #region static Add
+
+        public static RomanNumber Add(int first, int second) =>
+            new RomanNumber(first + second);
+
+        public static RomanNumber Add(RomanNumber first, RomanNumber second)
+        {
+            if (first is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            return new RomanNumber(first.Add(second));
+        }
+
+        public static RomanNumber Add(string first, string second)
+        {
+            if (first is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            var rn1 = new RomanNumber(RomanNumber.Parse(first));
+            var rn2 = new RomanNumber(RomanNumber.Parse(second));
+
+            return new RomanNumber(rn1.Add(rn2));
+        }
+
+        public static RomanNumber Add(RomanNumber first, int second)
+        {
+            if (first is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            return new RomanNumber(first.Add(second));
+        }
+
+        public static RomanNumber Add(RomanNumber first, string second)
+        {
+            if (first is null)
+                throw new ArgumentNullException("Null attribute is not possible");
+
+            return new RomanNumber(first.Add(second));
+        }
+
+        #endregion
     }
 }

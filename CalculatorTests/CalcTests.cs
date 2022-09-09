@@ -198,5 +198,16 @@ namespace CalculatorTests
             Assert.AreEqual("-MCMXCIX", romanNumber.ToString());
             // testing of negative numbers to string
         }
+
+        // Check if RomanNumber.Parse throws Exception with - in argument not at first place
+        [TestMethod]
+        public void RomanNumberNegativeException()
+        {
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-CM"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("M-"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("-N"));
+            Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("--X"));
+        }
     }
 }
