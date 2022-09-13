@@ -11,7 +11,7 @@ namespace CalculatorEX.App
     {
         public int Value { get; set; } = 0;
 
-        public RomanNumber() {}
+        public RomanNumber() { }
 
         public RomanNumber(int num) { Value = num; }
 
@@ -58,7 +58,7 @@ namespace CalculatorEX.App
                 if (index == -1)
                 {
                     // check if the number is negative
-                    if ( i == 0 && digit == '-' && str.Length != 1)
+                    if (i == 0 && digit == '-' && str.Length != 1)
                     {
                         res *= -1;
                         continue;
@@ -77,10 +77,10 @@ namespace CalculatorEX.App
             return res;
         }
 
-        
+
         public override string ToString()
         {
-            if(Value == 0)
+            if (Value == 0)
             {
                 return "N";
             }
@@ -92,17 +92,17 @@ namespace CalculatorEX.App
             int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
             // adds - to res if the value is negative
-            if(n < 0)
+            if (n < 0)
             {
                 n = n * -1;
                 res += "-";
             }
 
             // go through all values array
-            for(int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
                 // decrease n till n become less than current value and add that much letter to res
-                while(n >= values[i])
+                while (n >= values[i])
                 {
                     n -= values[i];
                     res += parts[i];
@@ -118,35 +118,37 @@ namespace CalculatorEX.App
         public RomanNumber Add(RomanNumber other)
         {
             if (other is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(other));
 
             return new RomanNumber(other.Value + this.Value);
         }
 
         public RomanNumber Add(int other)
         {
-            return new RomanNumber(other + this.Value);
+            return Add(new RomanNumber(other));
         }
 
         public RomanNumber Add(string other)
         {
             if (other is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(other));
 
-            return new RomanNumber(RomanNumber.Parse(other) + this.Value);
+            return Add(new RomanNumber(Parse(other)));
         }
-
         #endregion
 
         #region static Add
 
-        public static RomanNumber Add(int first, int second) =>
-            new RomanNumber(first + second);
+        public static RomanNumber Add(int first, int second) {
+            var n1 = new RomanNumber(first);
+            var n2 = new RomanNumber(second);
+            return n1.Add(n2);
+        }
 
         public static RomanNumber Add(RomanNumber first, RomanNumber second)
         {
             if (first is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(first));
 
             return new RomanNumber(first.Add(second));
         }
@@ -154,7 +156,7 @@ namespace CalculatorEX.App
         public static RomanNumber Add(string first, string second)
         {
             if (first is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(first));
 
             var rn1 = new RomanNumber(RomanNumber.Parse(first));
             var rn2 = new RomanNumber(RomanNumber.Parse(second));
@@ -165,7 +167,7 @@ namespace CalculatorEX.App
         public static RomanNumber Add(RomanNumber first, int second)
         {
             if (first is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(first));
 
             return new RomanNumber(first.Add(second));
         }
@@ -173,9 +175,34 @@ namespace CalculatorEX.App
         public static RomanNumber Add(RomanNumber first, string second)
         {
             if (first is null)
-                throw new ArgumentNullException("Null attribute is not possible");
+                throw new ArgumentNullException(nameof(first));
 
             return new RomanNumber(first.Add(second));
+        }
+
+        #endregion
+
+        #region static Add with objects
+
+        public static RomanNumber Add(object obj1, object obj2)
+        {
+            var pars = new object[] { obj1, obj2 };
+            var res = new RomanNumber(0);
+            RomanNumber rnI;
+
+            for (int i = 0; i < pars.Length; i++)
+            {
+                if (pars[i] is null) throw new ArgumentNullException($"obj{i + 1}");
+
+                if (pars[i] is int val) rnI = new RomanNumber(val);
+                else if (pars[i] is String str) rnI = new RomanNumber(Parse(str));
+                else if (pars[i] is RomanNumber rn) rnI = rn;
+                else throw new ArgumentException($"obj{i + 1}: type unsupported");
+
+                res = res.Add(rnI);
+            }
+
+            return res;
         }
 
         #endregion
