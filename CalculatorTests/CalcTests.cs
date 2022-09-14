@@ -51,7 +51,7 @@ namespace CalculatorTests
         public void RomanNumberParseNotAllowN()
         {
             var exc = Assert.ThrowsException<ArgumentException>(() => { RomanNumber.Parse("XNX"); });
-            var exp = new ArgumentException("N is not allowed in context");
+            var exp = new ArgumentException(Resources.GetMisplacedNMessage());
             Assert.AreEqual(exp.Message, exc.Message);
             // проверка на запрет N
         }
@@ -72,7 +72,7 @@ namespace CalculatorTests
             var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse("AXX"));
 
             // Check if invalid simbol at first place in argument of RomanNumber.Parse throws exception with "Invalid char A" message
-            var exp = new ArgumentException("Invalid char A");
+            var exp = new ArgumentException(Resources.GetInvalidCharMessage('A'));
             Assert.AreEqual(exp.Message, exc.Message);
 
             // Same for invalid simbol in the middle
@@ -95,7 +95,7 @@ namespace CalculatorTests
             var exc = Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse(""));
 
             // Check if RomanNumber.Parse with empty string argument exception message is equal "Empty string not allowed"
-            var exp = new ArgumentException("Empty string not allowed");
+            var exp = new ArgumentException(Resources.GetEmptyStringMessage());
             Assert.AreEqual(exp.Message, exc.Message);
 
             // Check if RomanNumber.Parse with null argument throws ArgumentNullException

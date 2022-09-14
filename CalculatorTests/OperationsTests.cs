@@ -57,7 +57,7 @@ namespace CalculatorTests
             var exc = Assert.ThrowsException<ArgumentNullException>(() => new RomanNumber(10).Add((RomanNumber)null!));
 
             // Test if exception.Message is "Null attribute is not possible"
-            var exp = new ArgumentNullException("Null attribute is not possible");
+            var exp = new ArgumentNullException("other");
             Assert.AreEqual(exp.Message, exc.Message);
         }
 
@@ -142,6 +142,21 @@ namespace CalculatorTests
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add(rn, "XXA"));
             Assert.ThrowsException<ArgumentException>(() => RomanNumber.Add(rn, "XAX"));
 
+        }
+
+        [TestMethod]
+        public void TestResources()
+        {
+            Assert.AreEqual(
+                "Empty string not allowed",
+                Resources.GetEmptyStringMessage()
+            );
+
+            Resources.Culture = "uk-UA";
+            Assert.AreEqual(
+                "Порожній рядок неприпустимий",
+                Resources.GetEmptyStringMessage()
+            );
         }
     }
 }

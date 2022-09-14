@@ -23,27 +23,17 @@ namespace CalculatorEX.App
                 throw new ArgumentNullException();
 
             if (str.Length < 1)
-                throw new ArgumentException("Empty string not allowed");
+                throw new ArgumentException(Resources.GetEmptyStringMessage());
 
             if (str == "N")
                 return 0;
 
             // if str contains N and it is not the only character throws exception
             if (str.Contains("N") && str.Length > 1)
-                throw new ArgumentException("N is not allowed in context");
+                throw new ArgumentException(Resources.GetMisplacedNMessage());
 
             char[] digits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
             int[] digitsValues = { 1, 5, 10, 50, 100, 500, 1000 };
-
-            // get last char
-            //char digit = str[str.Length - 1];
-            //int index = Array.IndexOf(digits, digit);
-
-            //if(index == -1)
-            //    throw new ArgumentException($"Invalid char {digit}");
-
-            //int val = digitsValues[index];
-            //int res = val;
 
             int val = 0;
             int res = 0;
@@ -64,7 +54,7 @@ namespace CalculatorEX.App
                         continue;
                     }
 
-                    throw new ArgumentException($"Invalid char {digit}");
+                    throw new ArgumentException(Resources.GetInvalidCharMessage(digit));
                 }
 
                 // Adds or substract value of current digit depending on previous digit
@@ -139,46 +129,46 @@ namespace CalculatorEX.App
 
         #region static Add
 
-        public static RomanNumber Add(int first, int second) {
-            var n1 = new RomanNumber(first);
-            var n2 = new RomanNumber(second);
-            return n1.Add(n2);
-        }
+        //public static RomanNumber Add(int first, int second) {
+        //    var n1 = new RomanNumber(first);
+        //    var n2 = new RomanNumber(second);
+        //    return n1.Add(n2);
+        //}
 
-        public static RomanNumber Add(RomanNumber first, RomanNumber second)
-        {
-            if (first is null)
-                throw new ArgumentNullException(nameof(first));
+        //public static RomanNumber Add(RomanNumber first, RomanNumber second)
+        //{
+        //    if (first is null)
+        //        throw new ArgumentNullException(nameof(first));
 
-            return new RomanNumber(first.Add(second));
-        }
+        //    return new RomanNumber(first.Add(second));
+        //}
 
-        public static RomanNumber Add(string first, string second)
-        {
-            if (first is null)
-                throw new ArgumentNullException(nameof(first));
+        //public static RomanNumber Add(string first, string second)
+        //{
+        //    if (first is null)
+        //        throw new ArgumentNullException(nameof(first));
 
-            var rn1 = new RomanNumber(RomanNumber.Parse(first));
-            var rn2 = new RomanNumber(RomanNumber.Parse(second));
+        //    var rn1 = new RomanNumber(RomanNumber.Parse(first));
+        //    var rn2 = new RomanNumber(RomanNumber.Parse(second));
 
-            return new RomanNumber(rn1.Add(rn2));
-        }
+        //    return new RomanNumber(rn1.Add(rn2));
+        //}
 
-        public static RomanNumber Add(RomanNumber first, int second)
-        {
-            if (first is null)
-                throw new ArgumentNullException(nameof(first));
+        //public static RomanNumber Add(RomanNumber first, int second)
+        //{
+        //    if (first is null)
+        //        throw new ArgumentNullException(nameof(first));
 
-            return new RomanNumber(first.Add(second));
-        }
+        //    return new RomanNumber(first.Add(second));
+        //}
 
-        public static RomanNumber Add(RomanNumber first, string second)
-        {
-            if (first is null)
-                throw new ArgumentNullException(nameof(first));
+        //public static RomanNumber Add(RomanNumber first, string second)
+        //{
+        //    if (first is null)
+        //        throw new ArgumentNullException(nameof(first));
 
-            return new RomanNumber(first.Add(second));
-        }
+        //    return new RomanNumber(first.Add(second));
+        //}
 
         #endregion
 
@@ -197,7 +187,7 @@ namespace CalculatorEX.App
                 if (pars[i] is int val) rnI = new RomanNumber(val);
                 else if (pars[i] is String str) rnI = new RomanNumber(Parse(str));
                 else if (pars[i] is RomanNumber rn) rnI = rn;
-                else throw new ArgumentException($"obj{i + 1}: type unsupported");
+                else throw new ArgumentException(Resources.GetInvalidTypeMessage(i, pars[i].GetType().Name));
 
                 res = res.Add(rnI);
             }
