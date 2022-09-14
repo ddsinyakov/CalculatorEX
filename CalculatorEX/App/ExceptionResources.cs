@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace CalculatorEX.App
 {
-
+    // some template messages for errors
     public static class ExceptionResources
     {
+        // localization setting
         public static string Culture = "en-US";
 
         public static String GetInvalidCharMessage(char c, string? culture = null)

@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace CalculatorEX.App
 {
+    // template outputs for menu
     public static class MenuResources
     {
+        // localization setting
         public static string Culture = "en-US";
+
+        // choose language 
         public static String AskLang()
              => "Choose language / Оберіть мову\n    1: English\n    2: Українська\n    -> ";
 
+        // write number 
         public static String Number(int number, string? culture = null)
             => (culture ?? Culture) switch
             {
@@ -21,6 +26,7 @@ namespace CalculatorEX.App
                 _ => throw new ArgumentException()
             };
 
+        // show result
         public static String Result(RomanNumber res, string? culture = null)
             => (culture ?? Culture) switch
             {

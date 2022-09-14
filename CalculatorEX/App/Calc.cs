@@ -10,6 +10,7 @@ namespace CalculatorEX.App
     {
         public void Run()
         {
+            // Ask language
             while (true)
             {
                 Console.Write(MenuResources.AskLang());
@@ -31,13 +32,14 @@ namespace CalculatorEX.App
 
             Console.Clear();
 
-
+            // get numbers
             Console.Write(MenuResources.Number(0));
             var rn1 = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
 
             Console.Write(MenuResources.Number(1));
             var rn2 = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
 
+            // show result
             Console.WriteLine(MenuResources.Result(rn1.Add(rn2)));
         }
     }
