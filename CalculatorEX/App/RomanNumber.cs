@@ -23,14 +23,14 @@ namespace CalculatorEX.App
                 throw new ArgumentNullException();
 
             if (str.Length < 1)
-                throw new ArgumentException(Resources.GetEmptyStringMessage());
+                throw new ArgumentException(ExceptionResources.GetEmptyStringMessage());
 
             if (str == "N")
                 return 0;
 
             // if str contains N and it is not the only character throws exception
             if (str.Contains("N") && str.Length > 1)
-                throw new ArgumentException(Resources.GetMisplacedNMessage());
+                throw new ArgumentException(ExceptionResources.GetMisplacedNMessage());
 
             char[] digits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
             int[] digitsValues = { 1, 5, 10, 50, 100, 500, 1000 };
@@ -54,7 +54,7 @@ namespace CalculatorEX.App
                         continue;
                     }
 
-                    throw new ArgumentException(Resources.GetInvalidCharMessage(digit));
+                    throw new ArgumentException(ExceptionResources.GetInvalidCharMessage(digit));
                 }
 
                 // Adds or substract value of current digit depending on previous digit
@@ -187,7 +187,7 @@ namespace CalculatorEX.App
                 if (pars[i] is int val) rnI = new RomanNumber(val);
                 else if (pars[i] is String str) rnI = new RomanNumber(Parse(str));
                 else if (pars[i] is RomanNumber rn) rnI = rn;
-                else throw new ArgumentException(Resources.GetInvalidTypeMessage(i, pars[i].GetType().Name));
+                else throw new ArgumentException(ExceptionResources.GetInvalidTypeMessage(i, pars[i].GetType().Name));
 
                 res = res.Add(rnI);
             }

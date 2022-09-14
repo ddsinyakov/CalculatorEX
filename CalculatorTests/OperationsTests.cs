@@ -149,13 +149,13 @@ namespace CalculatorTests
         {
             Assert.AreEqual(
                 "Empty string not allowed",
-                Resources.GetEmptyStringMessage()
+                ExceptionResources.GetEmptyStringMessage()
             );
 
-            Resources.Culture = "uk-UA";
+            ExceptionResources.Culture = "uk-UA";
             Assert.AreEqual(
                 "Порожній рядок неприпустимий",
-                Resources.GetEmptyStringMessage()
+                ExceptionResources.GetEmptyStringMessage()
             );
         }
     }
