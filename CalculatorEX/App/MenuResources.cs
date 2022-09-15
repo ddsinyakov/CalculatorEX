@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 namespace CalculatorEX.App
 {
     // template outputs for menu
-    public static class MenuResources
+    public class MenuResources
     {
         // localization setting
-        public static string Culture = "en-US";
+        public string Culture = "en-US";
 
         // choose language 
-        public static String AskLang()
+        public String AskLang()
              => "Choose language / Оберіть мову\n    1: English\n    2: Українська\n    -> ";
 
         // write number 
-        public static String Number(int number, string? culture = null)
+        public String Number(int number, string? culture = null)
             => (culture ?? Culture) switch
             {
                 "uk-UA" => $"Римське число #{number}: ",
@@ -27,7 +27,7 @@ namespace CalculatorEX.App
             };
 
         // show result
-        public static String Result(RomanNumber res, string? culture = null)
+        public String Result(RomanNumber res, string? culture = null)
             => (culture ?? Culture) switch
             {
                 "uk-UA" => $"Результат -> {res} / {res.Value}",

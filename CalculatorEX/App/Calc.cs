@@ -8,22 +8,24 @@ namespace CalculatorEX.App
 {
     public class Calc
     {
+        public MenuResources Resources { get; set; }
+
         public void Run()
         {
             // Ask language
             while (true)
             {
-                Console.Write(MenuResources.AskLang());
+                Console.Write(Resources.AskLang());
                 var lang = Console.ReadLine();
 
                 if (lang == "1")
                 {
-                    MenuResources.Culture = "en-US";
+                    Resources.Culture = "en-US";
                     break;
                 }
                 else if (lang == "2")
                 {
-                    MenuResources.Culture = "uk-UA";
+                    Resources.Culture = "uk-UA";
                     break;
                 }
 
@@ -32,15 +34,27 @@ namespace CalculatorEX.App
 
             Console.Clear();
 
-            // get numbers
-            Console.Write(MenuResources.Number(0));
-            var rn1 = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
+            var rns = new RomanNumber?[2] { null, null }; 
 
-            Console.Write(MenuResources.Number(1));
-            var rn2 = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
+            for (int i = 0; i < rns.Length; i++)
+            {
+                do
+                {
+                    try
+                    {
+                        Console.Write(Resources.Number(i + 1));
+                        rns[i] = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
+                    }
+                    catch(ArgumentException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                while (rns[i] == null);
+            }
 
             // show result
-            Console.WriteLine(MenuResources.Result(rn1.Add(rn2)));
+            Console.WriteLine(Resources.Result(rns[0]!.Add(rns[1]!)));
         }
     }
 }
