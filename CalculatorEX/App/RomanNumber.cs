@@ -10,10 +10,22 @@ namespace CalculatorEX.App
     public record RomanNumber
     {
         public int Value { get; set; } = 0;
+        public static String[] Operations = new String[] { "+", "-" };
 
         public RomanNumber() { }
 
         public RomanNumber(int num) { Value = num; }
+
+
+        private RomanNumber(object obj)
+        {
+            if (obj is null) throw new ArgumentNullException(nameof(obj));
+
+            if (obj is int val) Value = val;
+            else if (obj is String str) Value = Parse(str);
+            else if (obj is RomanNumber rn) Value = rn.Value;
+            else throw new ArgumentException(ExceptionResources.GetInvalidTypeMessage(obj.GetType().Name));
+        }
 
         #region Parse/ToString
 
@@ -129,7 +141,8 @@ namespace CalculatorEX.App
 
         #region static Add
 
-        //public static RomanNumber Add(int first, int second) {
+        //public static RomanNumber Add(int first, int second)
+        //{
         //    var n1 = new RomanNumber(first);
         //    var n2 = new RomanNumber(second);
         //    return n1.Add(n2);
@@ -176,23 +189,45 @@ namespace CalculatorEX.App
 
         public static RomanNumber Add(object obj1, object obj2)
         {
-            var pars = new object[] { obj1, obj2 };
-            var res = new RomanNumber(0);
-            RomanNumber rnI;
+            var rn1 = (obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1); 
+            var rn2 = (obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Add(rn2);
+        }
 
-            for (int i = 0; i < pars.Length; i++)
-            {
-                if (pars[i] is null) throw new ArgumentNullException($"obj{i + 1}");
+        #endregion
 
-                if (pars[i] is int val) rnI = new RomanNumber(val);
-                else if (pars[i] is String str) rnI = new RomanNumber(Parse(str));
-                else if (pars[i] is RomanNumber rn) rnI = rn;
-                else throw new ArgumentException(ExceptionResources.GetInvalidTypeMessage(i, pars[i].GetType().Name));
+        #region Sub (Substract)
 
-                res = res.Add(rnI);
-            }
+        public RomanNumber Sub(RomanNumber other)
+        {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
 
-            return res;
+            return new RomanNumber(this.Value - other.Value);
+        }
+
+        public RomanNumber Sub(int other)
+        {
+            return Sub(new RomanNumber(other));
+        }
+
+        public RomanNumber Sub(string other)
+        {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
+
+            return Sub(new RomanNumber(Parse(other)));
+        }
+
+        #endregion
+
+        #region static Sub (Substract) with objects
+
+        public static RomanNumber Sub(object obj1, object obj2)
+        {
+            var rn1 = (obj1 is RomanNumber r1) ? r1 : new RomanNumber(obj1);
+            var rn2 = (obj2 is RomanNumber r2) ? r2 : new RomanNumber(obj2);
+            return rn1.Sub(rn2);
         }
 
         #endregion

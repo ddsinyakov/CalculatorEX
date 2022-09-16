@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,51 +11,82 @@ namespace CalculatorEX.App
     {
         public MenuResources Resources { get; set; }
 
-        public void Run()
+        public Calc(MenuResources resources)
         {
-            // Ask language
+            Resources = resources;
+        }
+
+        private void AskLang()
+        {
+            // Ask user for language
             while (true)
             {
                 Console.Write(Resources.AskLang());
                 var lang = Console.ReadLine();
 
+                // Evaluate choosen language
                 if (lang == "1")
                 {
                     Resources.Culture = "en-US";
                     break;
                 }
-                else if (lang == "2")
+                if (lang == "2")
                 {
                     Resources.Culture = "uk-UA";
                     break;
                 }
-
-                Console.Clear();
             }
+        }
 
-            Console.Clear();
+        public void Run()
+        {
+            AskLang(); 
+            RomanNumber res = null!;
 
-            var rns = new RomanNumber?[2] { null, null }; 
-
-            for (int i = 0; i < rns.Length; i++)
+            // repeats untill user enter valid expression
+            do
             {
-                do
-                {
-                    try
-                    {
-                        Console.Write(Resources.Number(i + 1));
-                        rns[i] = new RomanNumber(RomanNumber.Parse(Console.ReadLine()!));
-                    }
-                    catch(ArgumentException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                while (rns[i] == null);
-            }
+                // ask Expression
+                Console.Write(Resources.InputExpression());
+                // user input expression
+                String? userInput = Console.ReadLine() ?? "";   
 
-            // show result
-            Console.WriteLine(Resources.Result(rns[0]!.Add(rns[1]!)));
+                try
+                {
+                    // evaluate expression
+                    res = EvalExpression(userInput);        
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            while (res is null);
+
+            // Show result
+            Console.WriteLine(Resources.Result(res));
+        }
+
+        public RomanNumber EvalExpression(String expression)
+        {
+            // split expression on two numbers and operation
+            String[] parts = expression.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+            // expression is invalid
+            if (parts.Length != 3)                                                              
+                throw new ArgumentException(Resources.GetInvalidExpressionMessage(expression));
+
+            // operation is invalid
+            if (Array.IndexOf(RomanNumber.Operations, parts[1]) == -1)                          
+                throw new ArgumentException(Resources.GetInvalidOperationMessage(parts[1]));    
+                                                                                
+            RomanNumber rn1 = new RomanNumber(RomanNumber.Parse(parts[0]));     // build roman number 1
+            RomanNumber rn2 = new RomanNumber(RomanNumber.Parse(parts[2]));     // build roman number 2
+            RomanNumber res = parts[1] == RomanNumber.Operations[0]             // counts result of expression
+                ? rn1.Add(rn2)
+                : rn1.Sub(rn2);
+
+            return res;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CalculatorTests
         [TestMethod]
         public void TestCalc()
         {
-            var calc = new Calc();
+            var calc = new Calc(new MenuResources());
 
             Assert.IsNotNull(calc);
         }

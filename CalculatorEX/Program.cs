@@ -1,8 +1,7 @@
 using CalculatorEX.App;
 
-var calc = new CalculatorEX.App.Calc()
-{
-    Resources = new MenuResources()
-};
+var calc = new CalculatorEX.App.Calc(
+        new MenuResources()
+    );
 
 calc.Run();

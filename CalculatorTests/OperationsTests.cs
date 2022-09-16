@@ -158,5 +158,46 @@ namespace CalculatorTests
                 ExceptionResources.GetEmptyStringMessage()
             );
         }
+
+        [TestMethod]
+        public void Sub()
+        {
+            var rn3 = new RomanNumber(3);
+            var rn10 = new RomanNumber(10);
+            var rn15 = new RomanNumber(15);
+            var rn_7 = new RomanNumber(-7);
+            var rn_9 = new RomanNumber(-9);
+
+            Assert.AreEqual(-7, rn3.Sub(rn10).Value);
+            Assert.AreEqual(5, rn15.Sub(rn10).Value);
+            Assert.AreEqual(22, rn15.Sub(rn_7).Value);
+            Assert.AreEqual(2, rn_7.Sub(rn_9).Value);
+
+            Assert.AreEqual(10, rn_7.Sub("-XVII").Value);
+            Assert.AreEqual(-7, rn3.Sub("X").Value);
+            Assert.AreEqual(5, rn10.Sub("V").Value);
+
+            Assert.AreEqual(22, rn15.Sub(-7).Value);
+            Assert.AreEqual(-17, rn3.Sub(20).Value);
+            Assert.AreEqual(8, rn15.Sub(7).Value);
+        }
+
+        [TestMethod]
+        public void SubStatic()
+        {
+            var rn10 = RomanNumber.Sub(32, 22);
+            var rn12 = RomanNumber.Sub("XX", 8);
+            var rn18 = RomanNumber.Sub(30, rn12);
+            var rn15 = RomanNumber.Sub(rn10, "-V");
+            var rn_10 = RomanNumber.Sub("V", rn15);
+            var rn_13 = RomanNumber.Sub(rn_10, 3);
+
+            Assert.AreEqual(10, rn10.Value);
+            Assert.AreEqual(12, rn12.Value);
+            Assert.AreEqual(18, rn18.Value);
+            Assert.AreEqual(15, rn15.Value);
+            Assert.AreEqual(-10, rn_10.Value);
+            Assert.AreEqual(-13, rn_13.Value);
+        }
     }
 }

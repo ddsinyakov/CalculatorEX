@@ -21,11 +21,11 @@ namespace CalculatorEX.App
                 _ => throw new ArgumentException()
             };
 
-        public static String GetInvalidTypeMessage(int d, String type, string? culture = null)
+        public static String GetInvalidTypeMessage(String type, string? culture = null)
             => (culture ?? Culture) switch
             {
-                "uk-UA" => $"obj{d}: типу '{type}' не підтримується",
-                "en-US" => $"obj{d}: type '{type}' not supported",
+                "uk-UA" => $"obj: типу '{type}' не підтримується",
+                "en-US" => $"obj: type '{type}' not supported",
                 _ => throw new ArgumentException()
             };
         
